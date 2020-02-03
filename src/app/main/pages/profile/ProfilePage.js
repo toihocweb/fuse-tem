@@ -40,7 +40,7 @@ function ProfilePage()
                             <Avatar className="w-96 h-96" src="assets/images/avatars/Velazquez.jpg"/>
                         </FuseAnimate>
                         <FuseAnimate animation="transition.slideLeftIn" delay={300}>
-                            <Typography className="md:ml-24" variant="h4" color="inherit">John Doe</Typography>
+                            <Typography className="md:ml-24" variant="h4" color="inherit">Nhat Bui</Typography>
                         </FuseAnimate>
                     </div>
 

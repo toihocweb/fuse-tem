@@ -30,7 +30,7 @@ function DemoContent()
                     happened to me? " he thought. It wasn't a dream.
                 </p>
                 <footer>
-                    John Doe
+                    Nhat Bui
                 </footer>
             </blockquote>
 

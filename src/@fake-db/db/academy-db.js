@@ -13,7 +13,7 @@ const demoSteps = [
             'To install the CLI you need to have installed <b>npm</b> which typically comes with <b>NodeJS</b>.' +
             'To install or upgrade the CLI run the following <b>npm</b> command:' +
             '<br><br>' +
-            '<code>npm -g install @angular/cli</code>' +
+            '<pre><code class="language-css">{color: red}</code></pre>' +
             '<br><br>' +
             'To verify that the CLI has been installed correctly, open a console and run:' +
             '<br><br>' +
@@ -373,7 +373,7 @@ const demoSteps = [
             'To install the CLI you need to have installed <b>npm</b> which typically comes with <b>NodeJS</b>.' +
             'To install or upgrade the CLI run the following <b>npm</b> command:' +
             '<br><br>' +
-            '<code>npm -g install @angular/cli</code>' +
+            '<code class="language-javascript">npm -g install @angular/cli</code>' +
             '<br><br>' +
             'To verify that the CLI has been installed correctly, open a console and run:' +
             '<br><br>' +

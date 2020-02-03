@@ -4,7 +4,7 @@ import {FuseAnimate} from '@fuse';
 
 const accounts = {
     'creapond'    : 'johndoe@creapond.com',
-    'withinpixels': 'johndoe@withinpixels.com'
+    'withinpixels': 'buidinhnhat2009@gmail.com'
 };
 
 function MailAppSidebarHeader(props)
