@@ -1,14 +1,8 @@
-import React, { useEffect, useRef, useState } from "react";
-import {
-  Button,
-  Divider,
-  Typography,
-  InputAdornment,
-  Icon,
-} from "@material-ui/core";
 import { TextFieldFormsy } from "@fuse";
-import Formsy from "formsy-react";
+import { Button, Icon, InputAdornment } from "@material-ui/core";
 import * as authActions from "app/auth/store/actions";
+import Formsy from "formsy-react";
+import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 function JWTLoginTab(props) {

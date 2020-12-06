@@ -4,14 +4,14 @@
 // https://github.com/facebook/create-react-app/tree/master/packages/react-app-polyfill
 // import 'react-app-polyfill/ie11';
 // import 'react-app-polyfill/stable';
-import "typeface-muli";
-import "./react-table-defaults";
-import "./react-chartjs-2-defaults";
-import "./styles/index.css";
+import App from "app/App";
 import React from "react";
 import ReactDOM from "react-dom";
+import "typeface-muli";
+import "./react-chartjs-2-defaults";
+import "./react-table-defaults";
 import * as serviceWorker from "./serviceWorker";
-import App from "app/App";
+import "./styles/index.css";
 // import "pri";
 
 ReactDOM.render(<App />, document.getElementById("root"));

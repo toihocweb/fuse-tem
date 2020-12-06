@@ -1,11 +1,9 @@
+import * as userActions from "app/auth/store/actions";
+import jwtService from "app/services/jwtService";
+import * as Actions from "app/store/actions";
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import * as userActions from "app/auth/store/actions";
 import { bindActionCreators } from "redux";
-import * as Actions from "app/store/actions";
-import firebaseService from "app/services/firebaseService";
-import auth0Service from "app/services/auth0Service";
-import jwtService from "app/services/jwtService";
 
 class Auth extends Component {
   /*eslint-disable-next-line no-useless-constructor*/
