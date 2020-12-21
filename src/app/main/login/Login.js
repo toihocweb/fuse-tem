@@ -69,9 +69,9 @@ function Login() {
               <Link className="font-medium" to="/register">
                 Create an account
               </Link>
-              <Link className="font-medium mt-8" to="/">
+              {/* <Link className="font-medium mt-8" to="/">
                 Back to Dashboard
-              </Link>
+              </Link> */}
             </div>
           </CardContent>
         </Card>

@@ -1,6 +1,7 @@
 import axios from "axios";
 import jwtDecode from "jwt-decode";
 import FuseUtils from "@fuse/FuseUtils";
+import history from "@history";
 
 class jwtService extends FuseUtils.EventEmitter {
   init() {
@@ -32,8 +33,10 @@ class jwtService extends FuseUtils.EventEmitter {
 
   handleAuthentication = () => {
     let access_token = this.getAccessToken();
-
     if (!access_token) {
+      history.push({
+        pathname: "/login",
+      });
       return;
     }
 
@@ -115,6 +118,9 @@ class jwtService extends FuseUtils.EventEmitter {
   };
 
   logout = () => {
+    history.push({
+      pathname: "/login",
+    });
     this.setSession(null);
   };
 
