@@ -687,3 +687,17 @@ mock.onPost("/api/auth/user/update").reply((config) => {
 mock.onGet("/api/user/all").reply(() => {
   return [200, authDB.users];
 });
+
+mock.onPost("/api/user/new").reply((request) => {
+  const newUser = JSON.parse(request.data);
+  const isEmailExists = authDB.users.find(
+    (user) => user.data.email === newUser.data.email
+  );
+  const error = {
+    email: isEmailExists ? "This email is already used" : null,
+  };
+  if (!error.email) {
+    authDB.users = [...authDB.users, newUser];
+    return [200, newUser];
+  } else return [200, { error }];
+});
