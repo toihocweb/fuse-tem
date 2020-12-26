@@ -12,7 +12,6 @@ import clsx from "clsx";
 import { Link } from "react-router-dom";
 import * as actions from "../store/actions";
 import _ from "@lodash";
-import history from "@history";
 
 const useStyles = makeStyles((theme) => ({
   userPhotoUpload: {
@@ -97,10 +96,7 @@ const User = (props) => {
   };
 
   const handleSubmit = (data) => {
-    if (path === "new") {
-      dispatch(actions.saveUser(data));
-      history.push("/apps/user-management/users/" + form.uuid);
-    }
+    if (path === "new") dispatch(actions.saveUser(data));
     dispatch(actions.updateUser(data));
   };
 
