@@ -96,7 +96,7 @@ const UsersTableHead = (props) => {
                 id="selectedUsersMenu"
                 anchorEl={selectedUsersMenu}
                 open={Boolean(selectedUsersMenu)}
-                close={closeSelectedUserMenu}
+                onClose={closeSelectedUserMenu}
               >
                 <MenuList>
                   <MenuItem onClick={closeSelectedUserMenu}>

@@ -11,6 +11,10 @@ export const UserManagementAppConfig = {
       component: React.lazy(() => import("./users/Users")),
     },
     {
+      path: "/apps/user-management/new",
+      component: React.lazy(() => import("./user/User")),
+    },
+    {
       path: "/apps/user-management",
       component: () => <Redirect to="/apps/user-management/users" />,
     },

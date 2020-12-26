@@ -16,13 +16,14 @@ import { withRouter } from "react-router-dom";
 
 const UsersTable = (props) => {
   const dispatch = useDispatch();
-  const users = useSelector(
-    ({ userManagementApp }) => userManagementApp.users.data
+  const authUser = useSelector(({ auth }) => auth.user);
+  const users = useSelector(({ userManagementApp }) =>
+    userManagementApp.users.data.filter((user) => user.uuid !== authUser.uuid)
   );
   const keyword = useSelector(
     ({ userManagementApp }) => userManagementApp.users.keyword
   );
-  const [data, setData] = useState(users);
+  const [data, setData] = useState([]);
   // an array of selected user
   const [selected, setSelected] = useState([]);
   // field order(desc, asc) by id
@@ -46,7 +47,6 @@ const UsersTable = (props) => {
     );
   }, [users, keyword]);
 
-  console.log(data);
   // select all user on click table head checkbox
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
