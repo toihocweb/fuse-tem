@@ -7,12 +7,12 @@ export const UserManagementAppConfig = {
   },
   routes: [
     {
-      path: "/apps/user-management/users",
-      component: React.lazy(() => import("./users/Users")),
+      path: "/apps/user-management/users/:userId",
+      component: React.lazy(() => import("./user/User")),
     },
     {
-      path: "/apps/user-management/new",
-      component: React.lazy(() => import("./user/User")),
+      path: "/apps/user-management/users",
+      component: React.lazy(() => import("./users/Users")),
     },
     {
       path: "/apps/user-management",

@@ -12,6 +12,7 @@ import clsx from "clsx";
 import { Link } from "react-router-dom";
 import * as actions from "../store/actions";
 import _ from "@lodash";
+import history from "@history";
 
 const useStyles = makeStyles((theme) => ({
   userPhotoUpload: {
@@ -25,6 +26,7 @@ const useStyles = makeStyles((theme) => ({
 const User = (props) => {
   const classes = useStyles(props);
   const dispatch = useDispatch();
+  const authUser = useSelector(({ auth }) => auth.user);
   const user = useSelector(
     ({ userManagementApp }) => userManagementApp.user.data
   );
@@ -33,7 +35,13 @@ const User = (props) => {
   );
   const { form, handleChange, setForm } = useForm(null);
   const [isFormValid, setIsFormValid] = useState(false);
+  const [path, setPath] = useState("");
   const formRef = useRef(null);
+
+  useEffect(() => {
+    if ((user && !form) || (user && form && user.uuid !== form.uuid))
+      setForm(user);
+  }, [form, user, setForm]);
 
   useEffect(() => {
     if (error) {
@@ -41,17 +49,19 @@ const User = (props) => {
         ...error,
       });
       disableButton();
+      dispatch(actions.reset());
     }
-  }, [error]);
+  }, [error, dispatch]);
 
   useEffect(() => {
-    dispatch(actions.initNewUser());
-  }, [dispatch]);
-
-  useEffect(() => {
-    if ((user && !form) || (user && form && user.uuid !== form.uuid))
-      setForm(user);
-  }, [form, user, setForm]);
+    const params = props.match.params;
+    const { userId } = params;
+    setPath(userId);
+    if (userId === "new") dispatch(actions.initNewUser());
+    else if (userId === "authUser")
+      dispatch(actions.getUser({ userId: authUser.uuid }));
+    else dispatch(actions.getUser(params));
+  }, [dispatch, props.match.params, authUser]);
 
   const disableButton = () => {
     setIsFormValid(false);
@@ -87,8 +97,11 @@ const User = (props) => {
   };
 
   const handleSubmit = (data) => {
-    formRef.current.reset();
-    dispatch(actions.saveUser(data));
+    if (path === "new") {
+      dispatch(actions.saveUser(data));
+      history.push("/apps/user-management/users/" + form.uuid);
+    }
+    dispatch(actions.updateUser(data));
   };
 
   return (

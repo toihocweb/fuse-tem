@@ -7,8 +7,11 @@ const initialState = {
 
 export default function userReducer(state = initialState, action) {
   switch (action.type) {
+    case actions.RESET: {
+      return { ...initialState };
+    }
     case actions.GET_USER: {
-      return { ...state, data: action.payload };
+      return { ...state, data: action.payload, error: null };
     }
     case actions.SAVE_USER: {
       return { ...state, data: action.payload, error: null };

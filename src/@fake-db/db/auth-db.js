@@ -701,3 +701,34 @@ mock.onPost("/api/user/new").reply((request) => {
     return [200, newUser];
   } else return [200, { error }];
 });
+
+mock.onPut("/api/user/update").reply((request) => {
+  const updateUser = JSON.parse(request.data);
+  const withoutUser = authDB.users.filter(
+    (user) => user.uuid !== updateUser.uuid
+  );
+  const isEmailExists = withoutUser.find(
+    (user) => user.data.email === updateUser.data.email
+  );
+  const error = {
+    email: isEmailExists ? "This email is already used" : null,
+  };
+  if (!error.email) {
+    const index = authDB.users.findIndex(
+      (user) => user.uuid === updateUser.uuid
+    );
+    authDB.users = [
+      ...authDB.users.slice(0, index),
+      updateUser,
+      ...authDB.users.slice(index + 1),
+    ];
+    return [200, updateUser];
+  } else return [200, { error }];
+});
+
+mock.onPost("/api/user/get").reply((request) => {
+  const { userId } = JSON.parse(request.data);
+  const response = authDB.users.find((user) => user.uuid.includes(userId));
+  console.log(response);
+  return [200, response];
+});
