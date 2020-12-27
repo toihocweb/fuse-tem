@@ -16,14 +16,14 @@ import { withRouter } from "react-router-dom";
 
 const UsersTable = (props) => {
   const dispatch = useDispatch();
-  const authUser = useSelector(({ auth }) => auth.user);
-  const users = useSelector(({ userManagementApp }) =>
-    userManagementApp.users.data.filter((user) => user.uuid !== authUser.uuid)
+  const users = useSelector(
+    ({ userManagementApp }) => userManagementApp.users.data
   );
   const keyword = useSelector(
     ({ userManagementApp }) => userManagementApp.users.keyword
   );
-  const [data, setData] = useState([]);
+
+  const [data, setData] = useState(users);
   // an array of selected user
   const [selected, setSelected] = useState([]);
   // field order(desc, asc) by id
@@ -41,11 +41,11 @@ const UsersTable = (props) => {
   useEffect(() => {
     const keywordRegEx = new RegExp("^" + keyword, "gi");
     setData(
-      keyword.length
-        ? users.filter((user) => user.data.displayName.match(keywordRegEx))
-        : users
+      !keyword.length === 0
+        ? users
+        : users.filter((user) => user.data.displayName.match(keywordRegEx))
     );
-  }, [users, keyword]);
+  }, [keyword, users]);
 
   // select all user on click table head checkbox
   const handleSelectAllClick = (event) => {
@@ -72,7 +72,7 @@ const UsersTable = (props) => {
   };
 
   const handleClick = (id) => {
-    props.history.push("/apps/user-management/" + id);
+    props.history.push("/apps/user-management/users/" + id);
   };
 
   const handleSelect = (event, id) => {
@@ -146,7 +146,7 @@ const UsersTable = (props) => {
                     <TableCell
                       className="w-52"
                       component="th"
-                      scopr="row"
+                      scope="row"
                       padding="none"
                     >
                       {user.data.photoURL ? (

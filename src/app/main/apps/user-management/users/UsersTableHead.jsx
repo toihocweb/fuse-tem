@@ -116,36 +116,38 @@ const UsersTableHead = (props) => {
             </div>
           )}
         </TableCell>
-        {rows.map((row) => (
-          <TableCell
-            key={row.id}
-            align={row.align}
-            padding={row.disablePadding ? "none" : "default"}
-            sortDirection={
-              props.order.id === row.id ? props.order.direction : false
-            }
-          >
-            {row.sort ? (
-              <Tooltip
-                title="Sort"
-                placement={
-                  row.align === "right" ? "bottom-end" : "bottom-start"
-                }
-                enterDelay={100}
-              >
-                <TableSortLabel
-                  active={props.order.id === row.id}
-                  direction={props.order.direction}
-                  onClick={(event) => props.onPropertySort(event, row.id)}
+        {rows.map((row) => {
+          return (
+            <TableCell
+              key={row.id}
+              align={row.align}
+              padding={row.disablePadding ? "none" : "default"}
+              sortDirection={
+                props.order.id === row.id ? props.order.direction : false
+              }
+            >
+              {row.sort ? (
+                <Tooltip
+                  title="Sort"
+                  placement={
+                    row.align === "right" ? "bottom-end" : "bottom-start"
+                  }
+                  enterDelay={100}
                 >
-                  {row.label}
-                </TableSortLabel>
-              </Tooltip>
-            ) : (
-              row.label
-            )}
-          </TableCell>
-        ))}
+                  <TableSortLabel
+                    active={props.order.id === row.id}
+                    direction={props.order.direction}
+                    onClick={(event) => props.onPropertySort(event, row.id)}
+                  >
+                    {row.label}
+                  </TableSortLabel>
+                </Tooltip>
+              ) : (
+                row.label
+              )}
+            </TableCell>
+          );
+        }, this)}
       </TableRow>
     </TableHead>
   );
