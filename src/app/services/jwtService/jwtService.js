@@ -3,6 +3,8 @@ import jwtDecode from "jwt-decode";
 import FuseUtils from "@fuse/FuseUtils";
 import history from "@history";
 
+const baseURL = process.env.REACT_APP_API_ENDPOINT;
+
 class jwtService extends FuseUtils.EventEmitter {
   init() {
     this.setInterceptors();
@@ -51,53 +53,106 @@ class jwtService extends FuseUtils.EventEmitter {
 
   createUser = (data) => {
     return new Promise((resolve, reject) => {
-      axios.post("/api/auth/register", data).then((response) => {
-        if (response.data.user) {
-          this.setSession(response.data.access_token);
-          resolve(response.data.user);
-        } else {
-          reject(response.data.error);
-        }
-      });
+      axios({
+        baseURL,
+        url: "/auth/register",
+        method: "POST",
+        data,
+        auth: {
+          username: process.env.REACT_APP_BASICAUTH_USER,
+          password: process.env.REACT_APP_BASICAUTH_PASSWORD,
+        },
+      })
+        .then((response) => {
+          if (response.data.user) {
+            this.setSession(response.data.access_token);
+            resolve(response.data.user);
+          }
+        })
+        .catch((err) => reject(err.response.data.error));
+
+      // axios.post("/api/auth/register", data).then((response) => {
+      //   if (response.data.user) {
+      //     this.setSession(response.data.access_token);
+      //     resolve(response.data.user);
+      //   } else {
+      //     reject(response.data.error);
+      //   }
+      // });
     });
   };
 
   signInWithEmailAndPassword = (email, password) => {
     return new Promise((resolve, reject) => {
-      axios
-        .get("/api/auth", {
-          data: {
-            email,
-            password,
-          },
-        })
+      axios({
+        baseURL,
+        url: "/auth/login",
+        method: "POST",
+        data: { email, password },
+        auth: {
+          username: process.env.REACT_APP_BASICAUTH_USER,
+          password: process.env.REACT_APP_BASICAUTH_PASSWORD,
+        },
+      })
         .then((response) => {
           if (response.data.user) {
             this.setSession(response.data.access_token);
             resolve(response.data.user);
-          } else {
-            reject(response.data.error);
           }
-        });
+        })
+        .catch((err) => reject(err.response.data.error));
+      // axios
+      //   .get("/api/auth", {
+      //     data: {
+      //       email,
+      //       password,
+      //     },
+      //   })
+      //   .then((response) => {
+      //     if (response.data.user) {
+      //       this.setSession(response.data.access_token);
+      //       resolve(response.data.user);
+      //     } else {
+      //       reject(response.data.error);
+      //     }
+      //   });
     });
   };
 
   signInWithToken = () => {
     return new Promise((resolve, reject) => {
-      axios
-        .get("/api/auth/access-token", {
-          data: {
-            access_token: this.getAccessToken(),
-          },
-        })
+      axios({
+        baseURL,
+        url: "/auth/current",
+        method: "GET",
+        headers: { Authorization: "Bearer " + this.getAccessToken() },
+      })
         .then((response) => {
           if (response.data.user) {
             this.setSession(response.data.access_token);
             resolve(response.data.user);
-          } else {
-            reject(response.data.error);
           }
+        })
+        .catch((err) => {
+          reject(err.response.data.error);
+          history.push({
+            pathname: "/login",
+          });
         });
+      // axios
+      //   .get("/api/auth/access-token", {
+      //     data: {
+      //       access_token: this.getAccessToken(),
+      //     },
+      //   })
+      //   .then((response) => {
+      //     if (response.data.user) {
+      //       this.setSession(response.data.access_token);
+      //       resolve(response.data.user);
+      //     } else {
+      //       reject(response.data.error);
+      //     }
+      //   });
     });
   };
 
