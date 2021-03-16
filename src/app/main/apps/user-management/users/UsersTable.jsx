@@ -50,7 +50,7 @@ const UsersTable = (props) => {
   // select all user on click table head checkbox
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
-      return setSelected(data.map((user) => user.uuid));
+      return setSelected(data.map((user) => user._id));
     }
     setSelected([]);
   };
@@ -121,7 +121,7 @@ const UsersTable = (props) => {
             {_.orderBy(data, [(o) => o.data[order.id]], [order.direction])
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((user) => {
-                const isSelected = selected.indexOf(user.uuid) !== -1;
+                const isSelected = selected.indexOf(user._id) !== -1;
                 return (
                   <TableRow
                     className="h-64 cursor-pointer"
@@ -129,9 +129,9 @@ const UsersTable = (props) => {
                     role="checkbox"
                     aria-checked={isSelected}
                     tabIndex={-1}
-                    key={user.uuid}
+                    key={user._id}
                     selected={isSelected}
-                    onClick={(event) => handleClick(user.uuid)}
+                    onClick={(event) => handleClick(user._id)}
                   >
                     <TableCell
                       className="w-48 px-4 sm:px-12"
@@ -140,7 +140,7 @@ const UsersTable = (props) => {
                       <Checkbox
                         checked={isSelected}
                         onClick={(event) => event.stopPropagation()}
-                        onChange={(event) => handleSelect(event, user.uuid)}
+                        onChange={(event) => handleSelect(event, user._id)}
                       />
                     </TableCell>
                     <TableCell
